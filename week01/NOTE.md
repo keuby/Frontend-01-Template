@@ -2,6 +2,10 @@
 
 https://www.processon.com/view/link/5e92dbcf1e085369d0bde7d8
 
+## URI 解析小程序
+
+https://github.com/keuby/kb-uri
+
 ## winter 语录
 
 1. 前端的核心价值是通过业务价值体现的
