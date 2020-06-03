@@ -15,6 +15,7 @@ const server = http.createServer((req, res) => {
             display: flex;
             justify-content: center;
             align-items: center;
+            background-color: rgb(255, 255, 255);
         }
         body div #myid{
             width:100px;
