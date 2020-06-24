@@ -1,0 +1,27 @@
+<app-panel (change)="map=$event"></app-panel>
+
+<button (click)="panel.handleReset()">重置</button>
+<button (click)="panel.handleInit()">初始化</button>
+<button (click)="stop()">暂停</button>
+<button (click)="resume()">继续</button>
+<button (click)="close()">关闭动画</button>
+<button (click)="resume()">开启动画</button>
+
+<br>
+
+<button (click)="storageType=0">广度优先搜索</button>
+<button (click)="storageType=1">深度优先搜索</button>
+<button (click)="storageType=2">启发式搜索</button>
+
+<br>
+
+起点：<input #stratx type="number">, <input #starty type="number">
+
+<br>
+
+终点：<input #endx type="number">, <input #endy type="number">
+
+<br>
+
+<button (click)="findPath([+stratx.value, +starty.value], [+endx.value, +endy.value])">开始搜索</button>
+<span>{{message}}</span>

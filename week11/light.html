@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #lights {
+            display: flex;
+            justify-content: space-evenly;
+            width: 300px;
+        }
+
+        .light {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: grey;
+        }
+    </style>
+</head>
+<body>
+    <div id="lights">
+        <div class="light"></div>
+        <div class="light"></div>
+        <div class="light"></div>
+    </div>
+    <button id="next">next</button>
+</body>
+<script>
+    const lights = document.getElementById('lights')
+    const greenLight = lights.children[0]
+    const yellowLight = lights.children[1]
+    const redLight = lights.children[2]
+
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms))
+    }
+
+    function happen(element, eventName) {
+        return new Promise(resolve => {
+            element.addEventListener(eventName, resolve)
+        })
+    }
+
+    function lighting (color) {
+        if (color === 'red') {
+            greenLight.style['background-color'] = ''
+            yellowLight.style['background-color'] = ''
+            redLight.style['background-color'] = 'red'
+        } else if (color === 'yellow') {
+            greenLight.style['background-color'] = ''
+            yellowLight.style['background-color'] = 'yellow'
+            redLight.style['background-color'] = ''
+        } else if (color === 'green') {
+            greenLight.style['background-color'] = 'green'
+            redLight.style['background-color'] = ''
+            yellowLight.style['background-color'] = ''
+        } else {
+            greenLight.style['background-color'] = ''
+            yellowLight.style['background-color'] = ''
+            redLight.style['background-color'] = ''
+        }
+    }
+
+    async function* sequence () {
+        const button = document.getElementById('next')
+        while(true) {
+            yield 'green'
+            await happen(button, 'click')
+            // await sleep(10000)
+            yield 'yellow'
+            await happen(button, 'click')
+            // await sleep(2000)
+            yield 'red'
+            await happen(button, 'click')
+            // await sleep(5000)
+        }
+    }
+
+    async function run () {
+        for await (const color of sequence()) {
+            lighting(color)
+        }
+    }
+
+    run()
+</script>
+</html>

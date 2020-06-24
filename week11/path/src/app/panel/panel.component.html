@@ -1,0 +1,8 @@
+<div id="wrapper" #wrapper>
+  <div
+    *ngFor="let status of source; index as i"
+    [class]="status"
+    (mouseover)="handle($event, i)"
+    (click)="handlePrint(i)"
+  ></div>
+</div>

@@ -1,0 +1,40 @@
+#wrapper {
+  @box-size: 6px;
+  @gap-size: 1px;
+  @panel-size: (@box-size + @gap-size * 2) * 100;
+
+  display: flex;
+  flex-flow: row wrap;
+  width: @panel-size;
+  height: @panel-size;
+
+  > div {
+    width: @box-size;
+    height: @box-size;
+    margin: @gap-size;
+
+    &.none {
+      background-color: grey;
+    }
+
+    &.filled {
+      background-color: black;
+    }
+
+    &.accessed {
+      background-color: paleturquoise;
+    }
+
+    &.start {
+      background-color: green;
+    }
+
+    &.end {
+      background-color: red;
+    }
+
+    &.found {
+      background-color: pink;
+    }
+  }
+}
