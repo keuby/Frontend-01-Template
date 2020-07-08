@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #dragable {
+            display: inline-block;
+            width: 100px;
+            height: 100px;
+            background-color: pink;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字
+        文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字
+        文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字
+        文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字
+        文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字
+        文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字
+        文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字
+        文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字
+        文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字
+        文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字
+        文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字
+        文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字
+        文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字
+        文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字
+        文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字
+        文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字
+        文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字
+        文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字
+        文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字
+        文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字
+        文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字 文字
+    </div>
+    <div id="dragable"></div>
+</body>
+<script>
+const dragable = document.getElementById('dragable');
+const container = document.getElementById('container');
+
+let baseX = 0, baseY = 0;
+
+const ranges = [];
+for (let i = 0; i < container.childNodes[0].textContent.length; i++) {
+    const range = document.createRange();
+    range.setStart(container.childNodes[0], i);
+    range.setEnd(container.childNodes[0], i);
+    ranges.push(range);
+}
+
+dragable.addEventListener('mousedown', event => {
+    const startX = event.clientX;
+    const startY = event.clientY;
+
+    const mousemove = (event) => {
+        const deltaX = baseX + event.clientX - startX;
+        const deltaY = baseY + event.clientY - startY;
+        range = nearest(deltaX, deltaY);
+        range.insertNode(dragable);
+    };
+
+    const mouseup = (event) => {
+        baseX = baseX + event.clientX - startX;
+        baseY = baseY + event.clientY - startY;
+        document.removeEventListener('mousemove', mousemove);
+        document.removeEventListener('mouseup', mouseup);
+    };
+
+    document.addEventListener('mousemove', mousemove);
+    document.addEventListener('mouseup', mouseup);
+})
+
+function nearest(px, py) {
+    let distance = Infinity;
+    let nearestRange = null;
+    for (const range of ranges) {
+        const { x, y } = range.getBoundingClientRect();
+        const d = (x - px) ** 2 + (y - py) ** 2;
+        if (d < distance) {
+            distance = d;
+            nearestRange = range
+        }
+    }
+    return nearestRange
+}
+
+document.addEventListener('selectstart', event => event.preventDefault())
+</script>
+</html>
